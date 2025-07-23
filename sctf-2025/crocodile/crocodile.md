@@ -51,20 +51,10 @@ Now that we have the values of $\omega$, we have everything we need to solve the
 Since LLL only returns results for integers on both the left-hand-side and right-hand-side vectors, it is perfect for our usage.  
 But wait, LLL doesn't operate in complex numbers! Since we are only multiplying our complex numbers by real integers, we are only operating with addition over complex numbers. This means that complex numbers will behave exactly like degree-1 polynomials in terms of $i$. As we know, addition of polynomials is simply addition of coefficients, which means we can just use two separate columns of the lattice for our constraints.  
 
-I ended up using the below lattice
-$$\begin{bmatrix}
-  1 & 0 & P_{real} & P_{imaginary} \\
-  0 & 1 & -Q_{real} & -Q_{imaginary} \\
-  0 & 0 & \omega_{1,real} & \omega_{1,imaginary} \\ 
-  0 & 0 & \omega_{2,real} & \omega_{2,imaginary}
-\end{bmatrix}$$
-This lattice should recover the vector
-$$\begin{bmatrix}
-  flag \\
-  1 \\
-  0 \\ 
-  0
-\end{bmatrix}$$
+I ended up using the below lattice  
+![lattice](./lattice.png)  
+This lattice should recover the vector  
+![vector](./vector.png)  
 After weighing the columns properly, we end up retreving the flag: `sctf{water_beats_sand!..in_arabasta,that_is}`. Truly a _One Piece_ reference.  
 
 We can verify that it indeed passes the `assert` test in the challenge code.
