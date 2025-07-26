@@ -31,19 +31,19 @@ Hang on a second, this equation looks familiar...isn't this an elliptic curve? W
 
 However, as mentioned earlier, we are representing elliptic curves in the form $y^2=x^3+ax+b$, so the coefficient of $x^3$ is $1$. Thankfully, by substituting $y=\frac{1}{2}y$, we can reduce the equation to the form $y^2=x^3+ax+b$.  
 
-So, what does this mean? We have found that a complex number, $u$, is isomorphic to a point on an elliptic curve $(℘(u),\frac{1}{2}℘'(u))$.  
+So, what does this mean? We have found that a complex number, $u$, can be mapped by an isomorphism to a point on an elliptic curve $(℘(u),\frac{1}{2}℘'(u))$.  
 
-Since this is an isomorphism, there is an inverse. We could go into the differential equation and manually find the solutions of the equation, but thankfully, it is already implemented in newer versions of `SageMath` with the following code:
+Since this is an isomorphism, there is an inverse. Importantly, we don't actually need to find the inverse of the derivative of the Weierstrass-p Function, as we can just take the $x$-coordinate of the point in question and calculate $℘^{-1}(P_x)$. Regardless, we can accomplish this using newer versions of `SageMath`, as shown in the code below:
 ```py
 Pu = E.period_lattice().e_log_RC(*(P.xy()))
 ```
-> The reason why the method `period_lattice()` is called is because elliptic curves over complex numbers are technically isomorphic to period lattices which can be used to construct complex tori, but I'm going about this writeup in a more algebraic sense, so I will not be talking about period lattices or complex tori.
+> The reason why the method `period_lattice()` is called is because the isomorphism we're using here is from elliptic curves over complex numbers to period lattices which can be used to construct complex tori, but I'm going about this writeup with a focus on algebraic explanation, so I will not be touching on period lattices or complex tori.
 
-Hence, we can map elliptic curve point addition to point addition over numbers, just like in Smart's Attack, so we can just perform direction division...right? Well, not really.
+Hence, we can map elliptic curve point addition to point addition over numbers, just like in Smart's Attack, so we can just perform direct division...right? Well, not really.
 ## Periodicity
 The function ℘ is doubly periodic. While that sounds abstract, let me illustrate with a simpler example.  
 If $\sin(x) = y$, is $x = \sin^{-1}(y)$? No, $x = \sin^{-1}(y)+2k\pi, k \in \mathbb{Z}$. This is because $\sin(x)=\sin(x+2k\pi),k \in \mathbb{Z}$. The $\sin$ function is singly periodic.  
-Double periodicity means that there are two values of $\omega$ such that $℘(x+\omega) = ℘(x)$. These values are also known as "periods".  
+Double periodicity means that there are two linearly independent values of $\omega$ such that $℘(x+\omega) = ℘(x)$. These values are also known as "periods".  
 
 Therefore, we can reduce our problem to $flag*P_u = Q_u+l\omega_1+m\omega_2, flag,l,m \in \mathbb{Z}$. 
 ### Finding $\omega$
