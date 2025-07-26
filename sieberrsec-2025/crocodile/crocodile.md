@@ -23,24 +23,28 @@ print(str(Q.xy()[0]))
 ```
 Once again, this is a very standard ECDLP-breaking challenge, where the scalar is the flag, and with the clear vulnerability being that the numbers are over a complex field.  
 ## The Weierstrass-℘ Function
-The Weierstrass-℘ Function, or the Weierstrass-p Function, which I will be referring to it by, is an infinite series which has terms depending on the equation of the elliptic curve which it concerns, and is also the solution to a specific differential equation. Said differential equation is unimportant so I will not be going into it.  
-However, this function is important in that a complex number, $u$, can be mapped by an isomorphism, to a point on an elliptic curve $(℘(u),℘'(u))$.  
+The Weierstrass-℘ Function, or the Weierstrass-p Function, which I will be referring to it by, is an infinite series which has terms depending on the equation of the elliptic curve which it concerns, and is also the solution to a specific differential equation:
+$$℘'(z)^2 = 4℘(z)^3−g_2℘(z)−g_3$$
+Hang on a second, this equation looks familiar...isn't this an elliptic curve? Well, yes, it is an elliptic curve, with $y=℘'(z)$ and $x=℘(z)$. While this is an elliptic curve, as mentioned earlier, we are representing elliptic curves in the form $y^2=x^3+ax+b$, so the coefficient of $x^3$ is $1$. Thankfully, by substituting $y=\frac{1}{2}y$, we can reduce the equation to the form $y^2=x^3+ax+b$.  
 
-Since this is an isomorphism, there is an inverse, which we can accomplish with the following code:
+So, what does this mean? We have found that a complex number, $u$, can be mapped by an isomorphism, to a point on an elliptic curve $(℘(u),\frac{1}{2}℘'(u))$.  
+
+Since this is an isomorphism, there is an inverse. We could go into the differential equation and manually find the solutions of the equation, but thankfully, it is already implemented in `SageMath` with the following code:
 ```py
 Pu = E.period_lattice().e_log_RC(*(P.xy()))
 ```
-where `A` and `B` are the coefficients in the equation of the elliptic curve $y^2=x^3+Ax+B$.
+> The reason why the method `period_lattice()` is called is because elliptic curves over complex numbers are technically isomorphic to period lattices which can be used to construct complex tori, but I'm going about this writeup in a more algebraic sense, so I will not be talking about complex tori.
 
 Hence, we can map elliptic curve point addition to point addition over numbers, just like in Smart's Attack, so we can just perform direction division...right? Well, not really.
 ## Periodicity
 The function ℘ is doubly periodic. While that sounds abstract, let me illustrate with a simpler example.  
-If $\sin(x) = y$, is $x = \sin^{-1}(y)$? No, $x = \sin^{-1}(y)+2k\pi, k \in \mathbb{Z}$. The $\sin$ function is singly periodic. Double periodicity means that there are two values of $\omega$ such that $℘(x+\omega) = ℘(x)$.
+If $\sin(x) = y$, is $x = \sin^{-1}(y)$? No, $x = \sin^{-1}(y)+2k\pi, k \in \mathbb{Z}$. This is because $\sin(x)=\sin(x+2k\pi),k \in \mathbb{Z}$. The $\sin$ function is singly periodic. Double periodicity means that there are two values of $\omega$ such that $℘(x+\omega) = ℘(x)$. These values are also known as "periods". Therefore, we can reduce our problem to $flag*P_u = Q_u+l\omega_1+m\omega_2, flag,l,m \in \mathbb{Z}$. 
 ### Finding $\omega$
 Finding the 2 values of $\omega$ is relatively easy, and can be done in newer versions of SageMath using the one-liner below:
 ```py
 omega1, omega2 = E.period_lattice().basis()
 ```
+
 The values of $\omega$ can be found by evaluating certain definite integrals, which I will not go into as we have already managed to find the values of $\omega$ through simpler means.
 ## Lattice Reduction
 Now that we have the values of $\omega$, we have everything we need to solve the challenge! We can do so by using lattice reduction, or in particular, the Lenstra–Lenstra–Lovász (LLL) lattice basis reduction algorithm.  
