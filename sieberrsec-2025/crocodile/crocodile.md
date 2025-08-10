@@ -1,5 +1,6 @@
 # Crocodile
 - Category: Crypto
+- Author: Warri
 - Solves: 0
 - Finals Challenge
 ## Description
