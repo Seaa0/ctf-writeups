@@ -1,0 +1,2 @@
+# Sieberrsec CTF 2025
+This was a local CTF that I participated in. I managed to clear 5/6 crypto challenges in the qualifiers and 5/8 crypto challenges in the finals, and I found one challenge (that I coincidentally did not solve) extremely interesting, which motivated me to make a writeup for it.

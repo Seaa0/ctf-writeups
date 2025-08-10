@@ -1,4 +1,17 @@
-# Crypto/Crocodile
+# Crocodile
+- Category: Crypto
+- Solves: 0
+- Finals Challenge
+## Description
+sand beats paper. *one* 
+
+sand beats rock. *line* 
+
+sand beats scissors. *crypto* 
+
+...what beats sand?
+## Foreword
+This was the hardest challenge of the CTF, which got zero solves. However, I managed to upsolve the challenge shorty after the CTF. I would rate this challenge a 10/10 for it was extremely enjoyable to solve.
 ## Prerequisites
 To understand this writeup, the following knowledge is required:
 1. Basic group theory, including homomorphisms and isomorphisms
