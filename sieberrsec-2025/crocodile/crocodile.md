@@ -51,7 +51,7 @@ Since this is an isomorphism, there is an inverse. Importantly, we don't actuall
 ```py
 Pu = E.period_lattice().e_log_RC(*(P.xy()))
 ```
-> The reason why the method `period_lattice()` is called is because the isomorphism we're using here is from elliptic curves over complex numbers to period lattices which can be used to construct complex tori, but I'm going about this writeup with a focus on explaining using the Weierstrass-p Function and its periodicity (see below for periodicity), so I will not be touching on period lattices or complex tori.
+> The reason why the method `period_lattice()` is called is because the isomorphism we're using here is from elliptic curves over complex numbers to $\mathbb{C}/\Lambda$ i.e. complex numbers modulo the periods of period lattices, but I'm going about this writeup with a focus on explaining using the Weierstrass-p Function and its periodicity (see below for periodicity), so I will not be touching on period lattices.
 
 Hence, we can map elliptic curve point addition to point addition over numbers, just like in Smart's Attack, so we can just perform direct division...right? Well, not really.
 ## Periodicity
